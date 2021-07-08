@@ -1,0 +1,71 @@
+
+@host=http://localhost:5000/api
+@forwardedUS=73.243.193.62
+
+
+# ----------------------------------------------
+###  @AUTH
+# @name authSession
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "email":"hola@ortega.cl",
+    "password":"87654321"
+}
+
+###
+@token = {{authSession.response.body.$.token}}
+@id = {{authSession.response.body.$.id}}
+# @token = {{authSession.response.headers.bearer}}
+
+# ----------------------------------------------
+###  @ USERS
+GET {{host}}/users/{{id}}
+Content-Type: application/json
+X-Forwarded-For: {{forwardedUS}} 
+Authorization: Bearer {{token}}
+
+####
+GET {{host}}/users
+ 
+### CREATE USER
+POST {{host}}/users
+Content-Type: application/json
+
+{
+    "email":"hola@laguag",
+    "password":"87654321",
+    "idOrganization":"60d0ee2c87ca573adbebdfc7"
+}
+
+
+# ----------------------------------------------
+### ROLES-ORGANIZATIONS
+GET {{host}}/organizations
+###
+GET {{host}}/organizations/60d0ee2c87ca573adbebdfc7
+
+
+# ----------------------------------------------
+### ROLES-PAGES
+GET {{host}}/pages
+###
+GET {{host}}/pages/60d0ed5687ca573adbebdf47
+
+
+# ----------------------------------------------
+### ROLES-PROFILES
+GET {{host}}/profile
+
+###
+GET {{host}}/profile/60d0ed5687ca573adbebdf47
+
+### CREATE USER
+POST {{host}}/profile
+Content-Type: application/json
+
+{
+    "name":"Perfil consultor informes",
+    "idPage":"60d0ed5687ca573adbebdf47"
+}

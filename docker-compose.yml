@@ -1,0 +1,13 @@
+version: '3'
+services: 
+    database:
+        image: 'mongo'
+        container_name: 'db-mongo'
+        environment: 
+            - MONGO_INITDB_DATABASE=tuevDB
+            - MONGO_INITDB_ROOT_USERNAME=mortega
+            - MONGO_INITDB_ROOT_PASSWORD=isIUKE23SyuikG3F
+        volumes:
+            - ./mongo-volumes/:/data/db
+        ports: 
+            - '27017-27017:27017-27017'
